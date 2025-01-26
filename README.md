@@ -10,7 +10,6 @@ This portfolio is designed to highlight:
 - My technical skills
 - Personal and professional projects
 - Education and certifications
-- Contact information for collaboration opportunities
 
 ## 🛠️ Built With
 - **HTML5**
@@ -23,9 +22,3 @@ This portfolio is designed to highlight:
 - Smooth animations
 - Easy navigation
 
-## 📄 License
-Feel free to explore and get inspired. If you'd like to use or adapt any part of it, please give credit. 💖
-
----
-
-Check this out, and let me know if you’d like to modify it or add something specific, like badges or detailed instructions! 🚀
