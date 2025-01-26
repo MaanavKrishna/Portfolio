@@ -15,7 +15,6 @@ This portfolio is designed to highlight:
 - **HTML5**
 - **CSS3**
 - **JavaScript**
-- Any other tech you’ve used (e.g., React, Tailwind, etc.)
 
 ## 🌟 Features
 - Fully responsive design
