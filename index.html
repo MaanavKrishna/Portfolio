@@ -298,10 +298,68 @@
         });
     }
 
+    function create3DIcons() {
+        const languages = ['Python', 'JavaScript', 'SQL', 'React', 'HTML', 'Embedded C'];
+        const container = document.getElementById('language-3d');
+
+        // Create a scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+        container.appendChild(renderer.domElement);
+
+        // Lighting
+        const light = new THREE.AmbientLight(0x404040); // soft white light
+        scene.add(light);
+
+        const loader = new THREE.FontLoader();
+
+        // Load the font
+        loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+            languages.forEach((lang, index) => {
+                const geometry = new THREE.TextGeometry(lang, {
+                    font: font,
+                    size: 0.5,
+                    height: 0.1,
+                    curveSegments: 12,
+                    bevelEnabled: true,
+                    bevelThickness: 0.02,
+                    bevelSize: 0.02,
+                    bevelSegments: 5
+                });
+                
+                const material = new THREE.MeshPhongMaterial({ color: 0x4caf50 });
+                const textMesh = new THREE.Mesh(geometry, material);
+
+                // Position the text in a grid layout
+                textMesh.position.x = (index % 3) * 2 - 2; // Adjust x position
+                textMesh.position.y = Math.floor(index / 3) * -1.5 + 1; // Adjust y position
+                textMesh.position.z = 0;
+
+                scene.add(textMesh);
+            });
+
+            camera.position.z = 5;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                // Rotate each icon slightly for visual interest
+                scene.children.forEach((child, index) => {
+                    if (child instanceof THREE.Mesh) {
+                        child.rotation.y += 0.005 + (index * 0.001);
+                    }
+                });
+                renderer.render(scene, camera);
+            }
+            animate();
+        }, undefined, function (error) {
+            console.error('An error happened:', error);
+        });
+    }
+
     window.onload = function() {
-        create3DIcons(); // Assuming this is defined elsewhere for language icons
+        create3DIcons(); // This will create the 3D icons
         create3DText();  // For the certifications menu
     };
   </script>
-</body>
-</html>
