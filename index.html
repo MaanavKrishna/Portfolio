@@ -38,7 +38,7 @@
       display: block;
       margin: auto;
     }
-    .project-card {
+    .certification-card, .project-card {
       background: rgba(34, 34, 34, 0.85);
       padding: 1rem;
       border-radius: 10px;
@@ -47,8 +47,13 @@
       max-width: 600px;
       transition: transform 0.3s ease-in-out;
     }
-    .project-card:hover {
+    .certification-card:hover, .project-card:hover {
       transform: scale(1.05);
+    }
+    .certification-card a, .project-card a {
+      color: #4caf50;
+      text-decoration: none;
+      font-weight: bold;
     }
     @keyframes glowHeader {
       from { box-shadow: 0 4px 15px rgba(0, 255, 0, 0.5); }
@@ -70,74 +75,55 @@
   </section>
 
   <section class="certifications">
-    <h2>🌟 Certifications</h2>
-    <ul>
-      <li>Programming for Everybody (Python Basics) – <a href="https://coursera.org/verify/GS0B4C0DENUF" target="_blank">Verify</a></li>
-      <li>Python Data Structures – <a href="https://coursera.org/verify/DB3NLSXGCN18" target="_blank">Verify</a></li>
-      <li>Introduction to AI – <a href="https://coursera.org/verify/2XNDHBI09SAM" target="_blank">Verify</a></li>
-      <li>Fundamentals of UI/UX Design – <a href="https://coursera.org/verify/L6NIS2LRXBA4" target="_blank">Verify</a></li>
-    </ul>
+    <h2>🌟 Coursera Certifications</h2>
+    <div class="certification-card">
+      <h3>Programming for Everybody (Python Basics)</h3>
+      <p>Introduction to Python programming, covering fundamental concepts and practical applications.</p>
+      <a href="https://coursera.org/verify/GS0B4C0DENUF" target="_blank">View Certificate</a>
+    </div>
+    <div class="certification-card">
+      <h3>Python Data Structures</h3>
+      <p>Explores Python's data structures, including lists, dictionaries, and more.</p>
+      <a href="https://coursera.org/verify/DB3NLSXGCN18" target="_blank">View Certificate</a>
+    </div>
+    <div class="certification-card">
+      <h3>Introduction to Artificial Intelligence (AI)</h3>
+      <p>Overview of AI concepts, including machine learning and neural networks.</p>
+      <a href="https://coursera.org/verify/2XNDHBI09SAM" target="_blank">View Certificate</a>
+    </div>
+    <div class="certification-card">
+      <h3>Fundamentals of UI/UX Design</h3>
+      <p>Covers user interface and user experience design principles.</p>
+      <a href="https://coursera.org/verify/L6NIS2LRXBA4" target="_blank">View Certificate</a>
+    </div>
   </section>
 
   <section class="robotics-certifications">
     <h2>🤖 Robotics Certifications</h2>
-    <a href="Electro-Blocks-Certificate.pdf" target="_blank">Electro-Blocks Robotics Certificate</a>
-    <a href="Ranger-Certificate.pdf" target="_blank">Ranger Robotics Certificate</a>
-    <a href="Codey-Certificate.pdf" target="_blank">Codey Robotics Certificate</a>
-    <a href="Quadrino-Certificate.pdf" target="_blank">Quadrino Robotics Certificate</a>
-  </section>
-
-  <section class="projects">
-    <h2>🚀 Latest GitHub Projects</h2>
-    <div id="project-list"></div>
+    <div class="certification-card">
+      <h3>Electro-Blocks Robotics Certificate</h3>
+      <p>Fundamentals of electronics and circuit building.</p>
+      <a href="Electro-Blocks-Certificate.pdf" target="_blank">Electro-Blocks Robotics Certificate</a>
+    </div>
+    <div class="certification-card">
+      <h3>Ranger Robotics Certificate</h3>
+      <p>Explored mechanics and electronics by building and programming robots.</p>
+      <a href="Ranger-Certificate.pdf" target="_blank">Ranger Robotics Certificate</a>
+    </div>
+    <div class="certification-card">
+      <h3>Codey Robotics Certificate</h3>
+      <p>Developed coding skills by programming the Codey robot.</p>
+      <a href="Codey-Certificate.pdf" target="_blank">Codey Robotics Certificate</a>
+    </div>
+    <div class="certification-card">
+      <h3>Quadrino Robotics Certificate</h3>
+      <p>Hands-on experience with Quadrino robotics, focusing on advanced robotic mechanics.</p>
+      <a href="Quadrino-Certificate.pdf" target="_blank">Quadrino Robotics Certificate</a>
+    </div>
   </section>
   
   <footer>
     <p>&copy; 2025 Maanav Krishna | All Rights Reserved.</p>
   </footer>
-  
-  <script>
-    function create3DText() {
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 600, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth, 300);
-      document.getElementById('language-3d').appendChild(renderer.domElement);
-      
-      const geometry = new THREE.TorusGeometry(1, 0.3, 16, 100);
-      const material = new THREE.MeshBasicMaterial({ color: 0x4caf50, wireframe: true });
-      const torus = new THREE.Mesh(geometry, material);
-      scene.add(torus);
-      
-      camera.position.z = 5;
-      
-      function animate() {
-        requestAnimationFrame(animate);
-        torus.rotation.x += 0.01;
-        torus.rotation.y += 0.01;
-        renderer.render(scene, camera);
-      }
-      animate();
-    }
-    create3DText();
-
-    async function fetchGitHubProjects() {
-      const response = await fetch("https://api.github.com/users/MaanavKrishna/repos");
-      const repos = await response.json();
-      const projectList = document.getElementById("project-list");
-      const currentYear = new Date().getFullYear();
-      
-      repos.forEach(repo => {
-        const createdYear = new Date(repo.created_at).getFullYear();
-        if (createdYear === currentYear && !repo.name.toLowerCase().includes("portfolio")) {
-          const projectCard = document.createElement("div");
-          projectCard.classList.add("project-card");
-          projectCard.innerHTML = `<h3>${repo.name}</h3><p>${repo.description || "No description available."}</p><a href="${repo.html_url}" target="_blank">View Project</a>`;
-          projectList.appendChild(projectCard);
-        }
-      });
-    }
-    fetchGitHubProjects();
-  </script>
 </body>
 </html>
