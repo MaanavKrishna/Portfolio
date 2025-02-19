@@ -126,29 +126,92 @@
     <p>&copy; 2025 Maanav Krishna | All Rights Reserved.</p>
   </footer>
   <script>
-    function create3DText() {
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ alpha: true });
-      renderer.setSize(window.innerWidth, 300);
-      document.getElementById("language-3d").appendChild(renderer.domElement);
-      
-      const geometry = new THREE.TorusGeometry(1, 0.3, 16, 100);
-      const material = new THREE.MeshBasicMaterial({ color: 0x4caf50, wireframe: true });
-      const torus = new THREE.Mesh(geometry, material);
-      scene.add(torus);
-      
-      camera.position.z = 5;
-      
-      function animate() {
-        requestAnimationFrame(animate);
-        torus.rotation.x += 0.01;
-        torus.rotation.y += 0.01;
-        renderer.render(scene, camera);
+  function create3DIcons() {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 600, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+
+    renderer.setSize(window.innerWidth, 300);
+    document.getElementById("language-3d").appendChild(renderer.domElement);
+
+    // Language icons and names
+    const languages = [
+      { name: "Python", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+      { name: "MySQL", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+      { name: "JavaScript", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+      { name: "React", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+      { name: "HTML", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+      { name: "Embedded C", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
+    ];
+
+    const languageMeshes = [];
+
+    // Load textures and create 3D icons
+    const loader = new THREE.TextureLoader();
+    languages.forEach((lang, index) => {
+      const material = new THREE.MeshBasicMaterial({
+        map: loader.load(lang.texture),
+        transparent: true
+      });
+
+      const geometry = new THREE.PlaneGeometry(1, 1);
+      const mesh = new THREE.Mesh(geometry, material);
+
+      mesh.position.x = (index - 2.5) * 2;
+      mesh.userData = { name: lang.name };
+      scene.add(mesh);
+      languageMeshes.push(mesh);
+    });
+
+    camera.position.z = 5;
+
+    // Hover effect to show language name
+    const hoverText = document.createElement("div");
+    hoverText.style.position = "absolute";
+    hoverText.style.color = "#4caf50";
+    hoverText.style.fontSize = "18px";
+    hoverText.style.fontFamily = "Arial, sans-serif";
+    hoverText.style.padding = "5px 10px";
+    hoverText.style.background = "rgba(0, 0, 0, 0.8)";
+    hoverText.style.borderRadius = "5px";
+    hoverText.style.display = "none";
+    document.body.appendChild(hoverText);
+
+    document.addEventListener("mousemove", (event) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      const mouse = new THREE.Vector2(
+        ((event.clientX - rect.left) / rect.width) * 2 - 1,
+        -((event.clientY - rect.top) / rect.height) * 2 + 1
+      );
+
+      const raycaster = new THREE.Raycaster();
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(languageMeshes);
+
+      if (intersects.length > 0) {
+        const hoveredObject = intersects[0].object;
+        hoverText.innerText = hoveredObject.userData.name;
+        hoverText.style.left = `${event.clientX + 10}px`;
+        hoverText.style.top = `${event.clientY + 10}px`;
+        hoverText.style.display = "block";
+      } else {
+        hoverText.style.display = "none";
       }
-      animate();
+    });
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      languageMeshes.forEach((mesh, index) => {
+        mesh.rotation.y += 0.02;
+        mesh.rotation.x = Math.sin(Date.now() * 0.001 + index) * 0.3;
+      });
+      renderer.render(scene, camera);
     }
-    create3DText();
-  </script>
+    animate();
+  }
+
+  window.onload = create3DIcons;
+</script>
 </body>
 </html>
