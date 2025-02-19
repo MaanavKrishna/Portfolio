@@ -61,33 +61,41 @@
       from { box-shadow: 0 4px 15px rgba(0, 255, 0, 0.5); }
       to { box-shadow: 0 6px 25px rgba(0, 255, 0, 0.7); }
     }
-    /* New styles from the provided HTML */
+    
+    /* Certification Menu Styles */
     .container {
       display: flex;
-      width: 80%;
+      flex-wrap: wrap;
+      width: 100%;
       max-width: 900px;
+      margin: 0 auto; /* Center the container */
       background: rgba(34, 34, 34, 0.95);
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
       overflow: hidden;
     }
+
     .menu {
-      width: 40%;
+      width: 100%;
       padding: 20px;
       background: rgba(20, 20, 20, 0.9);
       border-right: 2px solid #4caf50;
       position: relative;
+      max-width: none;
     }
+
     .menu h2 {
       text-align: center;
       margin-bottom: 15px;
       color: #4caf50;
       text-shadow: 0 0 10px #4caf50;
     }
+
     .menu ul {
       list-style: none;
       padding: 0;
     }
+
     .menu li {
       padding: 12px;
       margin: 10px 0;
@@ -97,29 +105,35 @@
       cursor: pointer;
       transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
+
     .menu li:hover {
       background: rgba(80, 80, 80, 0.9);
       transform: scale(1.1);
       box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.8);
     }
+
     .details {
-      width: 60%;
+      width: 100%;
       padding: 20px;
       text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
       position: relative;
+      max-width: none;
     }
+
     .details h3 {
       color: #4caf50;
       text-shadow: 0 0 10px #4caf50;
     }
+
     .details p {
       margin: 15px 0;
       font-size: 1rem;
       color: #d0d0d0;
     }
+
     .details a {
       display: inline-block;
       padding: 10px 15px;
@@ -130,10 +144,12 @@
       border-radius: 5px;
       transition: background 0.3s ease-in-out, transform 0.2s;
     }
+
     .details a:hover {
       background: #3a9e40;
       transform: scale(1.1);
     }
+
     .canvas-container {
       position: absolute;
       top: 50px;
@@ -142,6 +158,15 @@
       width: 100%;
       height: 200px;
       pointer-events: none;
+    }
+
+    @media (min-width: 768px) {
+      .menu {
+        width: 40%;
+      }
+      .details {
+        width: 60%;
+      }
     }
   </style>
 </head>
@@ -207,7 +232,6 @@
 
   <section class="robotics-certifications">
     <h2>🤖 Robotics Certifications</h2>
-    <!-- Keep the existing robotics certifications here -->
     <div class="certification-card">
       <h3>Electro-Blocks Robotics Certificate</h3>
       <p>Fundamentals of electronics and circuit building.</p>
@@ -272,9 +296,10 @@
             animate();
         });
     }
+
     window.onload = function() {
-        create3DIcons(); // This was in your original code for language icons
-        create3DText();  // New function for Coursera certifications
+        create3DIcons(); // Assuming this is defined elsewhere for language icons
+        create3DText();  // For the certifications menu
     };
   </script>
 </body>
