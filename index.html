@@ -6,6 +6,8 @@
   <title>Maanav Krishna | Futuristic Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/jsm/loaders/FontLoader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/jsm/geometries/TextGeometry.js"></script>
   <style>
     body {
       margin: 0;
@@ -59,6 +61,88 @@
       from { box-shadow: 0 4px 15px rgba(0, 255, 0, 0.5); }
       to { box-shadow: 0 6px 25px rgba(0, 255, 0, 0.7); }
     }
+    /* New styles from the provided HTML */
+    .container {
+      display: flex;
+      width: 80%;
+      max-width: 900px;
+      background: rgba(34, 34, 34, 0.95);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+      overflow: hidden;
+    }
+    .menu {
+      width: 40%;
+      padding: 20px;
+      background: rgba(20, 20, 20, 0.9);
+      border-right: 2px solid #4caf50;
+      position: relative;
+    }
+    .menu h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #4caf50;
+      text-shadow: 0 0 10px #4caf50;
+    }
+    .menu ul {
+      list-style: none;
+      padding: 0;
+    }
+    .menu li {
+      padding: 12px;
+      margin: 10px 0;
+      background: rgba(50, 50, 50, 0.8);
+      border-left: 4px solid #4caf50;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    .menu li:hover {
+      background: rgba(80, 80, 80, 0.9);
+      transform: scale(1.1);
+      box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.8);
+    }
+    .details {
+      width: 60%;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    .details h3 {
+      color: #4caf50;
+      text-shadow: 0 0 10px #4caf50;
+    }
+    .details p {
+      margin: 15px 0;
+      font-size: 1rem;
+      color: #d0d0d0;
+    }
+    .details a {
+      display: inline-block;
+      padding: 10px 15px;
+      background: #4caf50;
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s ease-in-out, transform 0.2s;
+    }
+    .details a:hover {
+      background: #3a9e40;
+      transform: scale(1.1);
+    }
+    .canvas-container {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 200px;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -95,30 +179,35 @@
   
   <section class="certifications">
     <h2>🌟 Coursera Certifications</h2>
-    <div class="certification-card">
-      <h3>Programming for Everybody (Python Basics)</h3>
-      <p>Introduction to Python programming, covering fundamental concepts and practical applications.</p>
-      <a href="https://coursera.org/verify/GS0B4C0DENUF" target="_blank">View Certificate</a>
-    </div>
-    <div class="certification-card">
-      <h3>Python Data Structures</h3>
-      <p>Explores Python's data structures, including lists, dictionaries, and more.</p>
-      <a href="https://coursera.org/verify/DB3NLSXGCN18" target="_blank">View Certificate</a>
-    </div>
-    <div class="certification-card">
-      <h3>Introduction to Artificial Intelligence (AI)</h3>
-      <p>Overview of AI concepts, including machine learning and neural networks.</p>
-      <a href="https://coursera.org/verify/2XNDHBI09SAM" target="_blank">View Certificate</a>
-    </div>
-    <div class="certification-card">
-      <h3>Fundamentals of UI/UX Design</h3>
-      <p>Covers user interface and user experience design principles.</p>
-      <a href="https://coursera.org/verify/L6NIS2LRXBA4" target="_blank">View Certificate</a>
+    <div class="container">
+        <div class="menu">
+            <h2>Menu</h2>
+            <ul>
+                <li onclick="showDetails('Programming for Everybody (Python Basics)', 'Introduction to Python programming covering fundamental concepts and practical applications.', 'https://coursera.org/verify/GS0B4C0DENUF')">
+                    Programming for Everybody (Python Basics)
+                </li>
+                <li onclick="showDetails('Python Data Structures', 'Explores Python’s data structures including lists, dictionaries, and more.', 'https://coursera.org/verify/DB3NLSXGCN18')">
+                    Python Data Structures
+                </li>
+                <li onclick="showDetails('Introduction to Artificial Intelligence (AI)', 'Overview of AI concepts, including machine learning and neural networks.', 'https://coursera.org/verify/2XNDHBI09SAM')">
+                    Introduction to Artificial Intelligence (AI)
+                </li>
+            </ul>
+            <div class="canvas-container">
+                <canvas id="menuCanvas"></canvas>
+            </div>
+        </div>
+        <div class="details">
+            <h3 id="course-title">Programming for Everybody (Python Basics)</h3>
+            <p id="course-description">Introduction to Python programming covering fundamental concepts and practical applications.</p>
+            <a id="course-link" href="https://coursera.org/verify/GS0B4C0DENUF" target="_blank">View Certificate</a>
+        </div>
     </div>
   </section>
 
   <section class="robotics-certifications">
     <h2>🤖 Robotics Certifications</h2>
+    <!-- Keep the existing robotics certifications here -->
     <div class="certification-card">
       <h3>Electro-Blocks Robotics Certificate</h3>
       <p>Fundamentals of electronics and circuit building.</p>
@@ -142,95 +231,51 @@
   </section>
   
   <footer>
-    <p>&copy; 2025 Maanav Krishna | All Rights Reserved.</p>
+    <p>© 2025 Maanav Krishna | All Rights Reserved.</p>
   </footer>
   <script>
-  function create3DIcons() {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 600, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-
-    renderer.setSize(window.innerWidth, 300);
-    document.getElementById("language-3d").appendChild(renderer.domElement);
-
-    // Language icons and names
-    const languages = [
-      { name: "Python", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-      { name: "MySQL", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-      { name: "JavaScript", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-      { name: "React", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "HTML", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-      { name: "Embedded C", texture: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
-    ];
-
-    const languageMeshes = [];
-
-    // Load textures and create 3D icons
-    const loader = new THREE.TextureLoader();
-    languages.forEach((lang, index) => {
-      const material = new THREE.MeshBasicMaterial({
-        map: loader.load(lang.texture),
-        transparent: true
-      });
-
-      const geometry = new THREE.PlaneGeometry(1, 1);
-      const mesh = new THREE.Mesh(geometry, material);
-
-      mesh.position.x = (index - 2.5) * 2;
-      mesh.userData = { name: lang.name };
-      scene.add(mesh);
-      languageMeshes.push(mesh);
-    });
-
-    camera.position.z = 5;
-
-    // Hover effect to show language name
-    const hoverText = document.createElement("div");
-    hoverText.style.position = "absolute";
-    hoverText.style.color = "#4caf50";
-    hoverText.style.fontSize = "18px";
-    hoverText.style.fontFamily = "Arial, sans-serif";
-    hoverText.style.padding = "5px 10px";
-    hoverText.style.background = "rgba(0, 0, 0, 0.8)";
-    hoverText.style.borderRadius = "5px";
-    hoverText.style.display = "none";
-    document.body.appendChild(hoverText);
-
-    document.addEventListener("mousemove", (event) => {
-      const rect = renderer.domElement.getBoundingClientRect();
-      const mouse = new THREE.Vector2(
-        ((event.clientX - rect.left) / rect.width) * 2 - 1,
-        -((event.clientY - rect.top) / rect.height) * 2 + 1
-      );
-
-      const raycaster = new THREE.Raycaster();
-      raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObjects(languageMeshes);
-
-      if (intersects.length > 0) {
-        const hoveredObject = intersects[0].object;
-        hoverText.innerText = hoveredObject.userData.name;
-        hoverText.style.left = `${event.clientX + 10}px`;
-        hoverText.style.top = `${event.clientY + 10}px`;
-        hoverText.style.display = "block";
-      } else {
-        hoverText.style.display = "none";
-      }
-    });
-
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-      languageMeshes.forEach((mesh, index) => {
-        mesh.rotation.y += 0.02;
-        mesh.rotation.x = Math.sin(Date.now() * 0.001 + index) * 0.3;
-      });
-      renderer.render(scene, camera);
+    function showDetails(title, description, link) {
+        document.getElementById('course-title').innerText = title;
+        document.getElementById('course-description').innerText = description;
+        document.getElementById('course-link').href = link;
     }
-    animate();
-  }
 
-  window.onload = create3DIcons;
-</script>
+    function create3DText() {
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, 2, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(400, 200);
+        document.getElementById("menuCanvas").appendChild(renderer.domElement);
+        
+        const loader = new THREE.FontLoader();
+        loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+            const geometry = new THREE.TextGeometry('Certifications', {
+                font: font,
+                size: 1,
+                height: 0.2,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelSegments: 5
+            });
+            const material = new THREE.MeshBasicMaterial({ color: 0x4caf50 });
+            const textMesh = new THREE.Mesh(geometry, material);
+            textMesh.position.set(-2.5, 0, 0);
+            scene.add(textMesh);
+            camera.position.z = 5;
+            function animate() {
+                requestAnimationFrame(animate);
+                textMesh.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+        });
+    }
+    window.onload = function() {
+        create3DIcons(); // This was in your original code for language icons
+        create3DText();  // New function for Coursera certifications
+    };
+  </script>
 </body>
 </html>
