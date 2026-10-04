@@ -1,0 +1,317 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #06090f;
+  --color-ink-2: #0a1018;
+  --color-ink-3: #111a26;
+  --color-bone: #ece4d3;
+  --color-bone-2: #ddd3bd;
+  --color-bone-3: #cbc0a7;
+  --color-graphite: #131a24;
+  --color-slate-ink: #4a5567;
+  --color-amber: #f2a03c;
+  --color-ember: #e0641f;
+  --color-mint: #6fe3c4;
+  --color-dim: #8e9bb0;
+
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Martian Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-amber);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #23303f;
+    border: 3px solid var(--color-ink);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-amber);
+  }
+}
+
+/* ── type helpers ───────────────────────────────────────────── */
+
+.u-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.u-meta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.u-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+/* ── the seam: where the running system meets its datasheet ──── */
+
+.seam {
+  position: relative;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  overflow: hidden;
+}
+
+.seam-ticks {
+  flex: 1;
+  height: 9px;
+  background-image: repeating-linear-gradient(to right, currentColor 0 1px, transparent 1px 11px);
+  opacity: 0.35;
+}
+
+/* ── panels ─────────────────────────────────────────────────── */
+
+.panel-bone {
+  background: var(--color-bone);
+  color: var(--color-graphite);
+  position: relative;
+}
+
+.panel-bone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(19, 26, 36, 0.16) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+}
+
+.panel-bone > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HUD frame ──────────────────────────────────────────────── */
+
+.hud {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.hud-corner {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  opacity: 0.6;
+}
+
+.hud-rail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(242, 160, 60, 0.14);
+}
+
+.hud-rail span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  background: var(--color-amber);
+}
+
+/* ── marquee ────────────────────────────────────────────────── */
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-run 42s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-run {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ── project cards ──────────────────────────────────────────── */
+
+.tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.tilt-layer {
+  transform: translateZ(34px);
+}
+
+.card-edge {
+  position: relative;
+  isolation: isolate;
+}
+
+.card-edge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(
+      140deg,
+      rgba(242, 160, 60, 0.6),
+      rgba(111, 227, 196, 0.2) 45%,
+      transparent 72%
+    )
+    border-box;
+  -webkit-mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card-edge:hover::after,
+.card-edge:focus-within::after {
+  opacity: 1;
+}
+
+/* replays a stroke being drawn each time its card is hovered */
+.group:hover .redraw {
+  animation: redraw 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes redraw {
+  from {
+    stroke-dashoffset: var(--len);
+  }
+}
+
+/* ── links ──────────────────────────────────────────────────── */
+
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.link-underline:hover,
+.link-underline:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* ── hero entrance ──────────────────────────────────────────── */
+
+.rise {
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(250ms + var(--i, 0) * 110ms);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+}
+
+/* anchors land clear of the fixed nav when smooth scroll is off */
+[id] {
+  scroll-margin-top: 64px;
+}
+
+/* ── reveal ─────────────────────────────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.75s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee,
+  .rise {
+    animation: none;
+  }
+  .tilt {
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
